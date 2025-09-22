@@ -6,7 +6,7 @@ CONTAINER=gost-git
 # Проверяем, запущен ли контейнер
 if ! docker ps --format '{{.Names}}' | grep -q "^${CONTAINER}$"; then
   echo "error: ${CONTAINER} not running."
-  echo "run './.bin/start_gost_git.sh' first."
+  echo "run 'start' first."
   exit 1
 fi
 
