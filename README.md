@@ -1,11 +1,12 @@
 # gost-env
 
 Этот репозиторий содержит удобный набор скриптов для работы с окружением Gost.
+> Он изначально расчитан под MacOS, но по идее должен работать и на других системах.
 
 ## Prerequisites
 
 - Docker
-- direnv (optional)
+- [direnv](https://formulae.brew.sh/formula/direnv) (optional)
 
 ## Quick Start
 
