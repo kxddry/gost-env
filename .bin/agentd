@@ -1,0 +1,31 @@
+#!/bin/bash
+# This script is used to run the woodpecker agent in the background
+
+set -e
+
+# ensure the setup is complete and the token is set
+if [ -z "$SETUP_COMPLETE" ]; then
+    echo "Setup is not complete. Run .envrc to complete the setup."
+    exit 1
+fi
+
+cd $BIN
+
+
+# check if the agent is already running
+if [[ -f "$PIDFILE" ]]; then
+  if kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    echo "woodpecker-agent already running (PID: $(cat "$PIDFILE"))"
+    exit 0
+  else
+    echo "Stale PID file found. Removing."
+    rm -f "$PIDFILE"
+  fi
+fi
+
+# run in the background and log to the log file, save the PID
+nohup "$AGENT_SCRIPT" >> "$LOGFILE" 2>&1 &
+
+echo $! > "$PIDFILE"
+
+echo "woodpecker-agent started (PID: $!)"

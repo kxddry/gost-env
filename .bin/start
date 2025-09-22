@@ -1,0 +1,36 @@
+#!/bin/bash
+# This script is used to start the gost-git container
+
+source .env
+
+HOST_DIR="$(pwd)"
+COMMON_VOL="-v ${HOST_DIR}:/workspace"
+
+# add env variables
+COMMON_ENV="-e GIT_USERNAME -e GIT_PASSWORD -e GIT_NAME"
+
+if docker ps --format '{{.Names}}' | grep -q "^${CONTAINER}$"; then
+  echo "${CONTAINER} already running"
+  exit 0
+fi
+
+if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER}$"; then
+  docker start "${CONTAINER}"
+  exit 0
+fi
+
+docker run -d --name "${CONTAINER}" \
+  ${COMMON_VOL} ${COMMON_ENV} \
+  -w /workspace \
+  "${IMAGE}" sleep infinity
+
+docker exec -i "${CONTAINER}" sh -c "
+  echo 'https://${GIT_USERNAME}:${GIT_PASSWORD}@infosec24.ru' > /.git-credentials
+  git config --global credential.helper store
+  git config --global user.email "${GIT_USERNAME}@edu.hse.ru"
+  git config --global user.name "${GIT_USERNAME}"
+  git config --global user.password "${GIT_PASSWORD}"
+  git config --global http.sslVerify false
+"
+
+echo "${CONTAINER} started and credentials set."

@@ -1,0 +1,35 @@
+#!/bin/bash
+# This script is used to run the woodpecker agent in the terminal
+
+set -e
+
+# ensure the setup is complete and the token is set
+if [ -z "$SETUP_COMPLETE" ]; then
+    echo "Setup is not complete. Run .envrc to complete the setup."
+    exit 1
+fi
+
+cd $BIN
+
+# grpc address of the server
+export WOODPECKER_SERVER=infosec24.ru:443
+
+# path of the agent config file
+export WOODPECKER_AGENT_CONFIG_FILE=./agent.conf
+
+# enable healthcheck endpoint
+export WOODPECKER_HEALTHCHECK=false
+
+# whether to use a secure transport
+export WOODPECKER_GRPC_SECURE=true
+
+# whether to verify the gRPC server certificate
+export WOODPECKER_GRPC_VERIFY=true
+
+# backend engine to run pipelines on
+export WOODPECKER_BACKEND=docker
+
+# default image
+export WOODPECKER_DEFAULT_IMAGE=ghcr.io/kxddry/gost-env
+
+./woodpecker-agent

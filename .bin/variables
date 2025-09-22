@@ -1,0 +1,9 @@
+#!/bin/bash
+# This script is used to set the variables for scripts
+
+
+export LOGFILE="/tmp/woodpecker-agent.log"
+export AGENT_SCRIPT="agent"
+export PIDFILE="/tmp/woodpecker-agent.pid"
+export CONTAINER="gost-git"
+export IMAGE="ghcr.io/kxddry/gost-env:latest"

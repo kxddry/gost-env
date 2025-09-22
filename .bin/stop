@@ -1,0 +1,11 @@
+#!/bin/bash
+# This script is used to stop the gost-git container
+
+if docker ps --format '{{.Names}}' | grep -q "^${CONTAINER}$"; then
+  echo "Stopping ${CONTAINER}..."
+  docker stop -t 0 "${CONTAINER}"
+  echo "Removing ${CONTAINER}..."
+  docker rm "${CONTAINER}"
+else
+  echo "${CONTAINER} is not running."
+fi

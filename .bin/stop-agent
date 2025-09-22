@@ -1,0 +1,15 @@
+#!/bin/bash
+# This script is used to stop the woodpecker agent
+
+if [[ -f "$PIDFILE" ]]; then
+  PID=$(cat "$PIDFILE")
+  if kill -0 "$PID" 2>/dev/null; then
+    kill "$PID"
+    echo "woodpecker-agent stopped (PID: $PID)"
+  else
+    echo "No running process with PID $PID"
+  fi
+  rm -f "$PIDFILE"
+else
+  echo "woodpecker-agent is not running"
+fi
