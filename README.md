@@ -6,7 +6,7 @@
 ## Prerequisites
 
 - Docker
-- [direnv](https://formulae.brew.sh/formula/direnv) (optional)
+- [direnv](https://direnv.net/) (optional)
 
 ## Quick Start
 
